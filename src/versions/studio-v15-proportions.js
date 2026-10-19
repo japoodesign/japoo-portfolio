@@ -723,6 +723,10 @@ const N = stages.length - 1
 const $ = sel => document.querySelector(sel)
 const lilyHint = $('#lily-hint'), barFill = $('#barfill'), drawer = $('#drawer'), rail = $('#rail'), hero = $('#hero'), tip = $('#tip')
 let prog = 0, progT = 0, activeStage = -1, projectOpen = -1, shift = 0, wasShift = null
+// always open at the top: stop the browser restoring an old scroll position (it made the page start at the end, so it looked stuck)
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
+const toTop = () => { if (new URLSearchParams(location.search).get('stage') === null) scrollTo(0, 0) }
+toTop(); addEventListener('load', toTop); addEventListener('pageshow', toTop)
 const DEBUG_STAGE = new URLSearchParams(location.search).get('stage')   // e.g. studio-v8.html?stage=3 jumps straight to a stage
 const readScroll = () => {
   if (DEBUG_STAGE !== null) { progT = THREE.MathUtils.clamp(Number(DEBUG_STAGE) / N, 0, 1); return }
