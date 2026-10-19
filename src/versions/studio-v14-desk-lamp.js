@@ -259,7 +259,7 @@ add(box(0.045, 0.27, 0.02), 0.6, 0, 0.14, -0.01, { parent: mon })
 add(box(0.64, 0.4, 0.02), 0.14, 0, 0.4, 0, { parent: mon })
 add(new THREE.PlaneGeometry(0.6, 0.35), 1, 0, 0.4, 0.0108, { parent: mon, material: new THREE.MeshBasicMaterial({ map: monitorScreen }), cast: false })
 // desk lamp: Sketchfab "Desk lamp" by uday (public/desk_lamp), model is Y-up already; scaled to the desk
-const lampHolder = new THREE.Group(); lampHolder.position.set(1.3, deskY + 0.035, -0.5); lampHolder.rotation.y = -0.5; scene.add(lampHolder)
+const lampHolder = new THREE.Group(); lampHolder.position.set(1.3, deskY + 0.035, -0.5); lampHolder.rotation.y = 1.9; scene.add(lampHolder)
 new GLTFLoader().load(import.meta.env.BASE_URL + 'desk_lamp/scene.gltf', (gltf) => {
   const m = gltf.scene
   const lr = new URLSearchParams(location.search).get('lr'); if (lr) { const r = lr.split(',').map(Number); m.rotation.set(r[0] * Math.PI / 2, r[1] * Math.PI / 2, r[2] * Math.PI / 2) } else m.rotation.x = 0   // ?lr=a,b,c: review helper, quarter turns
@@ -705,7 +705,7 @@ const V = (x, y, z) => new THREE.Vector3(x, y, z)
 const stages = [
   { pos: V(1.9, 2.0, 3.6),   look: V(0.5, 1.0, 0.0) },     // 0 hero: the whole studio
   { pos: V(-1.0, 2.25, 2.55), look: V(0.8, 0.8, 0.1) },   // 1 about: over her shoulder, her workspace + notebook
-  { pos: V(-0.55, 1.75, 0.95), look: V(-0.7, 0.9, -0.02) },   // 2 interests: top view of the table
+  { pos: V(-0.75, 2.5, 1.5), look: V(-0.8, 1.05, -0.25) },   // 2 interests: top view of the table
   { pos: V(-0.1, 2.4, 1.4),  look: V(-0.1, 2.4, -2.6) },   // 3 work: the four frames
   { pos: V(2.3, 2.55, -0.55), look: V(2.8, 2.45, -2.0) },   // 4 music: the radio
   { pos: V(1.1, 1.1, 0.8), look: V(1.03, 0.8, 0.53) }      // 5 contact: the flip phone, close and from above
@@ -855,7 +855,7 @@ function resize() {
   const w = innerWidth, h = innerHeight
   renderer.setSize(w, h, false); composer.setSize(w, h)
   camera.aspect = w / h
-  camera.fov = w / h < 1 ? 56 : 38
+  camera.fov = w / h < 1 ? 56 : 52
   camera.updateProjectionMatrix(); wasShift = null
 }
 addEventListener('resize', resize); resize()
