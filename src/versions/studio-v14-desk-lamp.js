@@ -259,7 +259,7 @@ add(box(0.045, 0.27, 0.02), 0.6, 0, 0.14, -0.01, { parent: mon })
 add(box(0.64, 0.4, 0.02), 0.14, 0, 0.4, 0, { parent: mon })
 add(new THREE.PlaneGeometry(0.6, 0.35), 1, 0, 0.4, 0.0108, { parent: mon, material: new THREE.MeshBasicMaterial({ map: monitorScreen }), cast: false })
 // desk lamp: Sketchfab "Desk lamp" by uday (public/desk_lamp), model is Y-up already; scaled to the desk
-const lampHolder = new THREE.Group(); lampHolder.position.set(1.3, deskY + 0.035, -0.5); lampHolder.rotation.y = 1.9; scene.add(lampHolder)
+const lampHolder = new THREE.Group(); lampHolder.position.set(1.3, deskY + 0.035, -0.5); lampHolder.rotation.y = -2.43; scene.add(lampHolder)
 new GLTFLoader().load(import.meta.env.BASE_URL + 'desk_lamp/scene.gltf', (gltf) => {
   const m = gltf.scene
   const lr = new URLSearchParams(location.search).get('lr'); if (lr) { const r = lr.split(',').map(Number); m.rotation.set(r[0] * Math.PI / 2, r[1] * Math.PI / 2, r[2] * Math.PI / 2) } else m.rotation.x = 0   // ?lr=a,b,c: review helper, quarter turns
@@ -359,7 +359,7 @@ makeLily([VX + 0.14, VY + 0.62, VZ + 0.05], [0.55, 2.2, -0.45], [[VX + 0.04, VY 
 makeLily([VX - 0.12, VY + 0.44, VZ + 0.1], [0.65, -0.5, 0.6], [[VX - 0.01, VY + 0.34, VZ + 0.03], [VX - 0.07, VY + 0.4, VZ + 0.07]])
 makeLily([VX + 0.06, VY + 0.5, VZ + 0.11], [0.6, 0.9, -0.5], [[VX + 0.02, VY + 0.36, VZ + 0.04], [VX + 0.05, VY + 0.43, VZ + 0.08]])
 { const L = lilies[1]; L.target = 1; L.b = 1 }   // one flower is already in bloom; the other four are buds
-window.__dbg = { lilies, get bones() { return bones }, get scene() { return scene }, get book() { return sketchbook }, get camera() { return camera }, THREE }   // review helper
+window.__dbg = { lilies, get lamp() { return lampHolder }, get bones() { return bones }, get scene() { return scene }, get book() { return sketchbook }, get camera() { return camera }, THREE }   // review helper
 function bloom(i) { const L = lilies[i]; L.target = 1; L.shake = 1 }
 // two long decorative buds + leaves (as in the reference)
 const b1 = [VX + 0.07, VY + 0.8, VZ - 0.02], b2 = [VX + 0.22, VY + 0.58, VZ + 0.03]
