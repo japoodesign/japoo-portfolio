@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Studio — 3D sketch scene</title>
+  <style>
+    html, body { margin: 0; background: #dad0be; }
+    canvas#studio { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+    #scroller { height: 700vh; }
+    .ui { position: fixed; inset: 0; pointer-events: none; font-family: 'DM Mono', ui-monospace, monospace; color: #0a45c4; }
+    .brand { position: absolute; left: 4vw; top: 4vh; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; }
+    .cue { position: absolute; right: 4vw; top: 4vh; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+    .panel { position: absolute; left: 4vw; bottom: 7vh; max-width: 30em; opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .panel.on { opacity: 1; transform: none; }
+    .panel .n { display: inline-block; background: #f3ecdc; padding: 4px 8px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; display: block; margin-bottom: 10px; }
+    .panel h2 { display: inline-block; background: #0a45c4; color: #f3ecdc; padding: .08em .2em .14em; margin: 0; font: 400 clamp(40px, 6.5vw, 100px)/0.92 'Instrument Serif', Georgia, serif; letter-spacing: -0.02em; }
+    .panel h2 em { font-style: italic; }
+    .panel p { margin: 14px 0 0; background: #f3ecdc; padding: 6px 10px 5px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; border-bottom: 1px solid currentColor; display: inline-block; padding-bottom: 3px; }
+    .bar { position: absolute; right: 4vw; bottom: 7vh; width: 2px; height: 120px; background: rgba(10,69,196,.25); }
+    .bar i { display: block; width: 100%; height: 0; background: #0a45c4; }
+    @media (max-width: 700px) { .panel { right: 4vw; } }
+  </style>
+</head>
+<body>
+  <canvas id="studio"></canvas>
+  <div id="scroller"></div>
+  <div class="ui">
+    <div class="brand">Studio</div>
+    <div class="cue">Scroll</div>
+    <section class="panel on"><span class="n">Architectural</span><h2>Design at the speed of <em>thought.</em></h2></section>
+    <section class="panel"><span class="n">1 · Intents, translated!</span><h2><em>Augmented</em> Sketch</h2><p>Watch the demo</p></section>
+    <section class="panel"><span class="n">2 · Ideas, shaped!</span><h2><em>Adaptive</em> Massing</h2><p>Watch the demo</p></section>
+    <section class="panel"><span class="n">3 · Iteration, orchestrated!</span><h2><em>Prompted</em> Plans</h2><p>Watch the demo</p></section>
+    <section class="panel"><span class="n">4 · Options, multiplied!</span><h2><em>Agentic</em> Refinement</h2><p>Watch the demo</p></section>
+    <section class="panel"><span class="n">5 · Imagination, realized!</span><h2><em>Instant</em> Facades</h2><p>Watch the demo</p></section>
+    <div class="bar"><i id="barfill"></i></div>
+  </div>
+  <script type="module" src="/src/versions/studio-v4-blue-refined.js"></script>
+</body>
+</html>

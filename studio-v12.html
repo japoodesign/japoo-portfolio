@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pooja — Product designer</title>
+  <meta name="description" content="Pooja — product designer and researcher. Explore her studio." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue: #0a2fb8; --ink: #0b1f6b; --cream: #ebe2cc; --cream-2: #e4d9bf; --line: #1b2e87; --gray: #6a6a66;
+      --rail: clamp(84px, 8.2vw, 135px); --drawer: clamp(300px, 24vw, 390px);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--cream); font-family: 'Inter Tight', system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+    canvas#studio { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+    #scroller .snap { height: 100vh; }
+
+    /* paper texture shared by rail + drawer */
+    .paper { background-color: var(--cream); background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .3  0 0 0 0 .2  0 0 0 .12 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+
+    /* ---------- left rail ---------- */
+    #rail { position: fixed; left: 0; top: 0; bottom: 0; width: var(--rail); z-index: 5; display: flex; flex-direction: column; justify-content: center; gap: 46px; border-right: 1px solid var(--line); }
+    #rail button { all: unset; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 18px 0; font-size: 15px; font-weight: 500; color: var(--blue); transition: background .25s; }
+    #rail button svg { width: 44px; height: 44px; stroke: var(--blue); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    #rail button:hover { background: rgba(10, 47, 184, .07); }
+    #rail button.active { background: rgba(80, 80, 70, .16); }
+    #rail button:focus-visible { outline: 2px solid var(--blue); outline-offset: -4px; }
+
+    /* ---------- drawer ---------- */
+    #drawer { position: fixed; left: var(--rail); top: 0; bottom: 0; width: var(--drawer); z-index: 4; padding: 0 34px 0 40px; display: flex; align-items: center; transform: translateX(-110%); transition: transform .7s cubic-bezier(.2, .8, .2, 1); box-shadow: 8px 0 30px rgba(10, 30, 120, .12); }
+    #drawer.open { transform: none; }
+    .pane { position: absolute; left: 40px; right: 34px; opacity: 0; pointer-events: none; transform: translateY(14px); transition: opacity .45s ease, transform .45s ease; }
+    .pane.on { opacity: 1; pointer-events: auto; transform: none; transition-delay: .25s; }
+    .kicker { font-family: 'Caveat', cursive; font-size: 24px; letter-spacing: .06em; text-transform: uppercase; display: inline-block; border-bottom: 2px solid var(--ink); padding-bottom: 2px; margin: 0 0 22px; color: var(--ink); }
+    h1.big { font-size: clamp(54px, 6.4vw, 92px); line-height: .94; letter-spacing: -.035em; font-weight: 700; margin: 0 0 22px; color: var(--ink); }
+    h2.sub { font-size: 30px; line-height: 1.05; letter-spacing: -.02em; font-weight: 500; margin: 0 0 24px; }
+    .rule { width: 50px; height: 1px; background: var(--ink); margin: 0 0 24px; }
+    .pane p { font-size: 22px; line-height: 1.22; letter-spacing: -.01em; color: var(--gray); margin: 0 0 14px; font-weight: 400; }
+    .pane p.lead { color: var(--ink); font-weight: 500; }
+    .list { list-style: none; margin: 4px 0 0; padding: 0; }
+    .list li { padding: 13px 0; border-top: 1px solid rgba(27, 46, 135, .25); font-size: 18px; line-height: 1.25; color: var(--gray); }
+    .list li b { display: block; color: var(--ink); font-weight: 600; font-size: 20px; margin-bottom: 2px; }
+    button.row, a.row { all: unset; box-sizing: border-box; display: block; width: 100%; cursor: pointer; padding: 13px 0; border-top: 1px solid rgba(27, 46, 135, .25); font-size: 18px; color: var(--gray); transition: padding .25s, color .25s; }
+    button.row b, a.row b { display: flex; justify-content: space-between; color: var(--ink); font-weight: 600; font-size: 20px; }
+    button.row:hover, a.row:hover { padding-left: 8px; color: var(--ink); }
+    button.row:focus-visible, a.row:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+    .back { all: unset; cursor: pointer; font-size: 15px; font-weight: 500; color: var(--blue); border-bottom: 1px solid var(--blue); margin-bottom: 26px; display: inline-block; }
+    .btn { all: unset; cursor: pointer; display: inline-block; margin-top: 8px; padding: 12px 18px; background: var(--blue); color: var(--cream); font-weight: 600; font-size: 16px; }
+    .btn:hover { background: var(--ink); }
+
+    /* now playing */
+    #np-card { display: grid; grid-template-columns: 78px 1fr; gap: 14px; align-items: center; padding: 14px; border: 1px solid var(--line); margin: 6px 0 14px; background: rgba(255, 255, 255, .25); }
+    #np-card.off { grid-template-columns: 1fr; }
+    #np-card.off #np-art, #np-card.off .np-meta, #np-card.off #np-bar, #np-card.off #np-time { display: none; }
+    #np-art { width: 78px; height: 78px; object-fit: cover; background: var(--cream-2); }
+    .np-meta b { display: block; font-size: 18px; color: var(--ink); line-height: 1.1; font-weight: 600; }
+    .np-meta span { font-size: 15px; color: var(--gray); }
+    #np-status { grid-column: 1 / -1; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); display: flex; align-items: center; gap: 8px; }
+    #np-card.playing #np-status::before { content: ''; width: 14px; height: 12px; background: linear-gradient(var(--blue), var(--blue)) 0 100%/3px 40% no-repeat, linear-gradient(var(--blue), var(--blue)) 5px 100%/3px 90% no-repeat, linear-gradient(var(--blue), var(--blue)) 10px 100%/3px 60% no-repeat; animation: eq 1s steps(4) infinite; }
+    @keyframes eq { 50% { background-size: 3px 90%, 3px 40%, 3px 100%; } }
+    #np-bar { grid-column: 1 / -1; height: 3px; background: rgba(27, 46, 135, .2); } #np-bar i { display: block; height: 100%; width: 0; background: var(--blue); }
+    #np-time { grid-column: 1 / -1; font-size: 12px; color: var(--gray); margin-top: -4px; }
+    #np-link { color: var(--blue); font-size: 14px; }
+    #np-embed iframe { border-radius: 12px; margin-top: 6px; }
+
+    /* ---------- hero ---------- */
+    #hero { position: fixed; left: calc(var(--rail) + 4vw); top: 9vh; z-index: 3; max-width: 760px; opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; pointer-events: none; }
+    #hero.on { opacity: 1; transform: none; }
+    #hero .kicker { font-size: 28px; background: var(--cream); padding: 4px 12px 2px; border-bottom: 0; text-decoration: underline; text-underline-offset: 5px; }
+    #hero h1 { margin: 0; font-size: clamp(40px, 5vw, 84px); line-height: .95; letter-spacing: -.04em; font-weight: 700; color: var(--ink); }
+    #hero h1 span { display: inline-block; background: var(--cream); padding: 0 .12em .06em; margin-bottom: 4px; }
+    #hero .cue { margin-top: 26px; font-size: 14px; letter-spacing: .1em; text-transform: uppercase; background: var(--cream); display: inline-block; padding: 8px 12px; }
+
+    /* progress + tooltip */
+    .bar { position: fixed; right: 24px; bottom: 28px; width: 2px; height: 110px; background: rgba(240, 232, 210, .5); z-index: 3; }
+    .bar i { display: block; width: 100%; height: 0; background: var(--cream); }
+    #tip { position: fixed; left: 0; top: 0; z-index: 9; pointer-events: none; background: var(--blue); color: var(--cream); padding: 10px 14px 11px; font-size: 16px; line-height: 1.2; opacity: 0; transition: opacity .2s; max-width: 280px; box-shadow: 4px 4px 0 rgba(11, 31, 107, .35); }
+    #tip.on { opacity: 1; }
+    #tip small { display: block; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; opacity: .75; margin-bottom: 3px; }
+
+    #lily-hint { position: fixed; left: 0; top: 0; z-index: 8; pointer-events: none; opacity: 0; transition: opacity .4s; margin: -44px 0 0 -42px; }
+    #lily-hint.on { opacity: 1; pointer-events: auto; cursor: pointer; }
+    #lily-hint span { display: block; background: var(--blue); color: var(--cream); font-size: 14px; font-weight: 600; letter-spacing: .04em; padding: 7px 12px 8px; box-shadow: 3px 3px 0 rgba(11, 31, 107, .35); animation: hintbob 1.6s ease-in-out infinite; }
+    #lily-hint i { position: absolute; left: 50%; bottom: -14px; width: 10px; height: 10px; margin-left: -5px; border: 2px solid var(--blue); border-radius: 50%; animation: hintping 1.6s ease-out infinite; }
+    @keyframes hintbob { 50% { transform: translateY(-4px); } }
+    @keyframes hintping { 0% { transform: scale(.6); opacity: 1; } 100% { transform: scale(2.6); opacity: 0; } }
+    @media (max-width: 699px) {
+      :root { --rail: 64px; }
+      #rail button { font-size: 0; gap: 0; } #rail button svg { width: 30px; height: 30px; }
+      #drawer { left: var(--rail); right: 0; top: auto; width: auto; height: 52vh; transform: translateY(110%); align-items: flex-start; padding-top: 26px; overflow: auto; }
+      #drawer.open { transform: none; }
+      .pane { position: absolute; left: 22px; right: 22px; } h1.big { font-size: 48px; } .pane p { font-size: 18px; }
+      #hero { left: calc(var(--rail) + 16px); }
+    }
+    @media (prefers-reduced-motion: reduce) { #drawer, .pane, #hero { transition: none; } }
+  </style>
+</head>
+<body>
+  <canvas id="studio" aria-label="An interactive 3D illustration of Pooja's studio"></canvas>
+  <div id="scroller"><div class="snap"></div><div class="snap"></div><div class="snap"></div><div class="snap"></div><div class="snap"></div><div class="snap"></div></div>
+
+  <!-- left rail -->
+  <nav id="rail" class="paper" aria-label="Sections">
+    <button data-go="1" data-rail="about" aria-label="About me"><svg viewBox="0 0 48 48"><circle cx="24" cy="15" r="8"/><path d="M8 42c0-9 7-15 16-15s16 6 16 15z"/></svg>About me</button>
+    <button data-go="3" data-rail="work" aria-label="Work"><svg viewBox="0 0 48 48"><path d="M5 12h14l4 5h20v23H5z"/><path d="M5 17h38"/></svg>Work</button>
+    <button data-go="4" data-rail="music" aria-label="Music"><svg viewBox="0 0 48 48"><path d="M18 36V10l22-5v26"/><circle cx="12" cy="36" r="6"/><circle cx="34" cy="31" r="6"/></svg>Music</button>
+    <button data-go="5" data-rail="contact" aria-label="Contact me"><svg viewBox="0 0 48 48"><rect x="5" y="10" width="38" height="28"/><path d="M5 11l19 17 19-17"/></svg>Contact me</button>
+  </nav>
+
+  <!-- hero (stage 0) -->
+  <header id="hero" class="on">
+    <span class="kicker">Hey, I'm Pooja</span>
+    <h1><span>I turn rough ideas</span><br /><span>into things people love.</span></h1>
+    <div class="cue">Scroll to step into my studio ↓</div>
+  </header>
+
+  <!-- side drawer -->
+  <aside id="drawer" class="paper" aria-live="polite">
+    <section class="pane" data-pane="about">
+      <span class="kicker">Hello,</span>
+      <h1 class="big">About me</h1>
+      <h2 class="sub">Product designer and researcher</h2>
+      <div class="rule"></div>
+      <p class="lead">Hey, I'm Pooja — a product designer.</p>
+      <p>Creating magic at the intersection of research, strategy, and design.</p>
+    </section>
+
+    <section class="pane" data-pane="interests">
+      <span class="kicker">Off the clock,</span>
+      <h1 class="big">My interests</h1>
+      <h2 class="sub">Sketching, flowers &amp; toys</h2>
+      <div class="rule"></div>
+      <ul class="list">
+        <li><b>Sketching</b>A sketchbook is never far — ideas start on paper long before they reach a screen.</li>
+        <li><b>Flowers</b>Fresh lilies on the desk, because a calm space makes better work.</li>
+        <li><b>Toys</b>Little robots, blocks and a rubber duck to keep play and curiosity close.</li>
+      </ul>
+    </section>
+
+    <section class="pane" data-pane="work">
+      <span class="kicker">Selected,</span>
+      <h1 class="big">My work</h1>
+      <h2 class="sub">Four projects, framed</h2>
+      <div class="rule"></div>
+      <p>Hover a frame on the wall and tap it to see the work.</p>
+      <!-- keep these titles in sync with PROJECTS in src/versions/studio-v12-v9-crisp.js -->
+      <button class="row" data-project="0"><b>TVS Motors <span>→</span></b>UX · Product design</button>
+      <button class="row" data-project="1"><b>Project Two <span>→</span></b>Product design</button>
+      <button class="row" data-project="2"><b>Project Three <span>→</span></b>Research</button>
+      <button class="row" data-project="3"><b>Project Four <span>→</span></b>Strategy</button>
+    </section>
+
+    <section class="pane" data-pane="project">
+      <button class="back" id="proj-back">← Back to work</button><br />
+      <span class="kicker" id="proj-num">Project 01</span>
+      <h1 class="big" id="proj-title" style="font-size: clamp(44px, 5vw, 70px)">Project</h1>
+      <h2 class="sub" id="proj-tag">Tag</h2>
+      <div class="rule"></div>
+      <p id="proj-blurb"></p>
+    </section>
+
+    <section class="pane" data-pane="music">
+      <span class="kicker">On repeat,</span>
+      <h1 class="big">My music</h1>
+      <h2 class="sub">I love music</h2>
+      <div class="rule"></div>
+      <div id="np-card" class="off">
+        <img id="np-art" alt="Album cover" />
+        <div class="np-meta"><b id="np-title">—</b><span id="np-artist"></span><br /><a id="np-link" href="#" target="_blank" rel="noopener">Open in Spotify</a></div>
+        <div id="np-status">Checking what's playing…</div>
+        <div id="np-bar"><i></i></div><div id="np-time"></div>
+      </div>
+      <button class="btn" id="np-tune">Tap the radio to tune in</button>
+      <div id="np-embed"></div>
+    </section>
+
+    <section class="pane" data-pane="contact">
+      <span class="kicker">Say hi,</span>
+      <h1 class="big">Contact me</h1>
+      <h2 class="sub">Let's make something</h2>
+      <div class="rule"></div>
+      <!-- placeholders: replace with your real details -->
+      <a class="row" href="mailto:hello@example.com"><b>Email <span>→</span></b>hello@example.com</a>
+      <a class="row" href="#" target="_blank" rel="noopener"><b>LinkedIn <span>→</span></b>Let's connect</a>
+      <a class="row" href="#" target="_blank" rel="noopener"><b>Behance <span>→</span></b>More of my work</a>
+      <a class="row" href="#" target="_blank" rel="noopener"><b>Instagram <span>→</span></b>Sketches &amp; flowers</a>
+    </section>
+  </aside>
+
+  <div class="bar" aria-hidden="true"><i id="barfill"></i></div>
+  <div id="tip" role="status"></div>
+  <div id="lily-hint" aria-hidden="true"><i></i><span>Touch it</span></div>
+  <script type="module" src="/src/versions/studio-v12-v9-crisp.js"></script>
+</body>
+</html>

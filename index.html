@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Designer, Frontend Developer &amp; Creative Artist — Portfolio</title>
+  <meta name="description" content="Designer, frontend developer and creative artist turning rough ideas into things that bloom." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Roboto:wght@300;400;500;900&display=swap" rel="stylesheet" />
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body>
+  <header class="nav">
+    <a class="logo" href="#top" data-cursor>Pooja</a>
+    <nav class="nav-links mono">
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <p class="status mono"><i></i><span>Open for work</span></p>
+  </header>
+
+  <canvas id="scene" aria-hidden="true"></canvas>
+
+  <main id="top">
+    <section id="hero">
+      <p class="hero-sub">Designer, Frontend Developer &amp; Creative Artist</p>
+      <h1 class="hero-title">I turn rough ideas into things that <em>bloom.</em></h1>
+      <div class="hero-meta mono">
+        <div><span class="dim">Local time</span><b id="clock">--:--:--</b></div>
+        <div class="open"><i></i>Open for work</div>
+        <div class="cue"><span>Scroll</span><i></i></div>
+      </div>
+    </section>
+
+    <section id="intro">
+      <p class="statement" id="statement">Good design isn't decoration. It's the sharpest point of your presence &mdash; where an idea stops being a <em>bud</em> and starts to open.</p>
+    </section>
+
+    <section id="work">
+      <header class="w-head">
+        <h2 class="big">Selected <em>Work</em></h2>
+        <p>Thoughtful design shaped by curiosity, crafted with intention, and delivered with the attention you deserve.</p>
+      </header>
+
+      <div class="w-wrap">
+        <div class="w-sticky">
+          <ul class="w-list" id="wlist">
+            <li class="w-row is-active"><span class="idx mono">01.</span><h3><em>TVS Case Study</em></h3><span class="tags mono">UX, Product design</span></li>
+            <li class="w-row"><span class="idx mono">02.</span><h3><em>Project Two</em></h3><span class="tags mono">Brand, Design</span></li>
+            <li class="w-row"><span class="idx mono">03.</span><h3><em>Project Three</em></h3><span class="tags mono">Creative coding</span></li>
+          </ul>
+          <div class="w-deck" id="wdeck">
+            <article class="w-card"><span class="mono">01 / 03</span><h4>TVS <em>Case Study</em></h4><p class="mono">Preview coming soon</p></article>
+            <article class="w-card"><span class="mono">02 / 03</span><h4>Project <em>Two</em></h4><p class="mono">Preview coming soon</p></article>
+            <article class="w-card"><span class="mono">03 / 03</span><h4>Project <em>Three</em></h4><p class="mono">Preview coming soon</p></article>
+          </div>
+        </div>
+      </div>
+
+      <div class="explore" aria-hidden="true">
+        <div class="explore-track">
+          <span>&bull; &bull; &bull; Explore more</span><span>&bull; &bull; &bull; Explore more</span><span>&bull; &bull; &bull; Explore more</span><span>&bull; &bull; &bull; Explore more</span>
+          <span>&bull; &bull; &bull; Explore more</span><span>&bull; &bull; &bull; Explore more</span><span>&bull; &bull; &bull; Explore more</span><span>&bull; &bull; &bull; Explore more</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <span class="pill pill-c"><em>Contact</em></span>
+      <h2 class="big c-title">Ready to see your <em>ideas</em> bloom?</h2>
+      <p class="c-sub">Treat it like a <em>first date</em>. We'll get to know each other better, with <em>no obligations</em>. No worries, the coffee is on me.</p>
+      <div class="roll" id="roll">
+        <i class="roll-line"></i>
+        <a class="diamond" id="diamond" href="mailto:hello@example.com"><b></b><span class="mono">[ Let's talk ]</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot" id="foot">
+    <div class="foot-grid">
+      <a class="mail" href="mailto:hello@example.com">hello@example.com</a>
+      <div class="mono time"><span>Local time</span><b id="clock2">--:--:--</b></div>
+      <ul class="cols">
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Behance</a></li>
+        <li><a href="#">Dribbble</a></li>
+        <li><a href="#">LinkedIn</a></li>
+      </ul>
+      <ul class="cols">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <p class="foot-word" aria-hidden="true">Bloom</p>
+  </footer>
+</body>
+</html>
