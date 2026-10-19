@@ -192,10 +192,10 @@ frameTex.forEach((tex, i) => {
 })
 
 const deskY = 0.75
-add(box(3.4, 0.07, 1.75), 1, 0.1, deskY, -0.1)                                // larger, thick top (rounded edges)
-add(box(3.2, 0.08, 0.035), 1, 0.1, deskY - 0.075, 0.74)                       // front apron
-add(box(3.2, 0.08, 0.035), 1, 0.1, deskY - 0.075, -0.94)                      // back apron
-for (const x of [-1.45, 1.65]) {                                                // trestle legs, splayed like a real drafting desk
+add(box(2.9, 0.07, 1.75), 1, -0.15, deskY, -0.1)                                // larger, thick top (rounded edges)
+add(box(2.7, 0.08, 0.035), 1, -0.15, deskY - 0.075, 0.74)                       // front apron
+add(box(2.7, 0.08, 0.035), 1, -0.15, deskY - 0.075, -0.94)                      // back apron
+for (const x of [-1.45, 1.15]) {                                                // trestle legs, splayed like a real drafting desk
   for (const zs of [-1, 1]) limb([x, 0.02, -0.1 + zs * 0.82], [x, deskY - 0.05, -0.1 + zs * 0.58], 0.034, 0.044, 1)
   limb([x, 0.3, -0.7], [x, 0.3, 0.5], 0.018, 0.018, 1)                         // stretcher
 }
