@@ -245,7 +245,7 @@ penSet.forEach(([tone, h, r], i) => {
   nib.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), d)
 })
 // laptop, angled toward her and the viewer so the screen shows
-const laptop = new THREE.Group(); laptop.position.set(0.45, deskY + 0.04, 0.3); laptop.rotation.y = -0.35; scene.add(laptop)
+const laptop = new THREE.Group(); laptop.position.set(0.0, deskY + 0.04, 0.28); laptop.rotation.y = 0; scene.add(laptop)
 add(box(0.5, 0.018, 0.34), 0.75, 0, 0.009, 0, { parent: laptop })
 add(box(0.42, 0.004, 0.13), 0.12, 0, 0.02, -0.05, { parent: laptop, edges: false })
 add(box(0.14, 0.003, 0.085), 0.9, 0, 0.02, 0.095, { parent: laptop, edges: false })
