@@ -7,7 +7,7 @@ export default ({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   return {
     base: './',
-    build: { rollupOptions: { input: { main: 'index.html', studio: 'studio-v13.html', v9: 'studio-v9.html', v8: 'studio-v8.html' } } },
+    build: { rollupOptions: { input: { main: 'index.html', studio: 'studio-v14.html', v9: 'studio-v9.html', v8: 'studio-v8.html' } } },
     server: { port: Number(process.env.PORT) || 5173, strictPort: false },
     plugins: [
       {
